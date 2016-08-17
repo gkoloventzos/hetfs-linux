@@ -249,3 +249,5 @@ cond_syscall(sys_execveat);
 
 /* membarrier */
 cond_syscall(sys_membarrier);
+
+cond_syscall(sys_hetfs);
