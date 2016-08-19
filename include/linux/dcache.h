@@ -11,6 +11,7 @@
 #include <linux/rcupdate.h>
 #include <linux/lockref.h>
 
+#include <linux/hetfs.h>
 struct path;
 struct vfsmount;
 
@@ -126,6 +127,8 @@ struct dentry {
 	struct list_head d_lru;		/* LRU list */
 	struct list_head d_child;	/* child of parent list */
 	struct list_head d_subdirs;	/* our children */
+    struct analyze_request read_reqs;
+    struct analyze_request write_reqs;
 	/*
 	 * d_alias and d_rcu can share memory
 	 */

@@ -7,7 +7,8 @@
 
 #define MAX_DIFF 200000000
 
-struct rb_root hetfstree = RB_ROOT;
+//struct rb_root hetfstree = RB_ROOT;
+//LIST_HEAD(hetfs_requests);
 
 struct data {
 	char *hash;
@@ -15,10 +16,10 @@ struct data {
 	loff_t size;
     int read_all_file;
     int write_all_file;
+    int read_seq;
+    int write_seq;
     unsigned long long int deleted;
-    struct file *filp;
-    struct analyze_request *read_reqs;
-    struct analyze_request *write_reqs;
+    struct dentry *dentry;
     struct rb_node node;
 };
 
@@ -31,7 +32,7 @@ struct analyze_request {
 	struct list_head list;
 };
 
-struct data *search(struct rb_root *, char *);
-int insert(struct rb_root *, struct data *);
+struct data *rb_search(struct rb_root *, char *);
+int rb_insert(struct rb_root *, struct data *);
 
 #endif

@@ -810,7 +810,16 @@ static inline int ra_has_index(struct file_ra_state *ra, pgoff_t index)
 	return (index >= ra->start &&
 		index <  ra->start + ra->size);
 }
-
+/*
+struct hetfs_request {
+	int type;
+    char *name;
+	long long offset;
+	long len;
+	unsigned long long int time;
+    struct list_head list;
+};
+*/
 struct file {
 	union {
 		struct llist_node	fu_llist;
