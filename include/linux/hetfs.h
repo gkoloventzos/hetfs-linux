@@ -32,6 +32,14 @@ struct analyze_request {
 	struct list_head list;
 };
 
+struct kdata {
+    struct dentry *dentry;
+    loff_t offset;
+    long length;
+    int type;
+    unsigned long long int time;
+};
+
 struct data *rb_search(struct rb_root *, char *);
 int rb_insert(struct rb_root *, struct data *);
 
