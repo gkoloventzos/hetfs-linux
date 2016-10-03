@@ -1500,6 +1500,9 @@ struct task_struct {
 	struct list_head children;	/* list of my children */
 	struct list_head sibling;	/* linkage in my parent's children list */
 	struct task_struct *group_leader;	/* threadgroup leader */
+//#ifdef CONFIG_HETFS
+    struct rb_root *hetfstree;
+//#endif
 
 	/*
 	 * ptraced is the list of tasks this task is using ptrace on.

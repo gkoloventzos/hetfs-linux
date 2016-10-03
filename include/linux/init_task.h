@@ -200,6 +200,7 @@ extern struct task_group root_task_group;
 	.cpus_allowed	= CPU_MASK_ALL,					\
 	.nr_cpus_allowed= NR_CPUS,					\
 	.mm		= NULL,						\
+	.hetfstree		= NULL,						\
 	.active_mm	= &init_mm,					\
 	.restart_block = {						\
 		.fn = do_no_restart_syscall,				\

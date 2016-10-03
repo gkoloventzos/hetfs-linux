@@ -4,11 +4,24 @@
 #include <linux/rbtree.h>
 #include <linux/list.h>
 #include <linux/types.h>
+#include <linux/rwsem.h>
 
 #define MAX_DIFF 200000000
 
+#define MAX_NAME 255
+
+static DECLARE_RWSEM(tree_sem);
 //struct rb_root hetfstree = RB_ROOT;
-//LIST_HEAD(hetfs_requests);
+int exact = 1;
+
+struct analyze_request {
+    long long start_offset;
+    long long end_offset;
+    unsigned long long int start_time;
+    unsigned long long int end_time;
+    int times;
+    struct list_head list;
+};
 
 struct data {
 	char *hash;
@@ -19,17 +32,10 @@ struct data {
     int read_seq;
     int write_seq;
     unsigned long long int deleted;
+    struct analyze_request read_reqs;
+    struct analyze_request write_reqs;
     struct dentry *dentry;
     struct rb_node node;
-};
-
-struct analyze_request {
-	long long start_offset;
-	long long end_offset;
-	unsigned long long int start_time;
-	unsigned long long int end_time;
-    int times;
-	struct list_head list;
 };
 
 struct kdata {
@@ -42,5 +48,6 @@ struct kdata {
 
 struct data *rb_search(struct rb_root *, char *);
 int rb_insert(struct rb_root *, struct data *);
+int print_tree(void);
 
 #endif
