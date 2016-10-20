@@ -32,8 +32,8 @@ struct data {
     int read_seq;
     int write_seq;
     unsigned long long int deleted;
-    struct analyze_request read_reqs;
-    struct analyze_request write_reqs;
+    struct list_head *read_reqs;
+    struct list_head *write_reqs;
     struct dentry *dentry;
     struct rb_node node;
 };
