@@ -1,0 +1,6 @@
+[submodule "zfs"]
+	path = zfs
+	url = https://gkoloventzos@github.com/gkoloventzos/zfs.git
+[submodule "spl"]
+	path = spl
+	url = https://gkoloventzos@github.com/gkoloventzos/spl.git
