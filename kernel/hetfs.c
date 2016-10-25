@@ -19,21 +19,21 @@ int print_tree(void) {
     for (node = rb_first(init_task.hetfstree); node; node = rb_next(node)) {
         ++all_nodes;
         entry = rb_entry(node, struct data, node);
-        printk(KERN_EMERG "[HETFS] file: %s,entry %p, node %p", entry->file, entry, node);
+        printk(KERN_EMERG "[HETFS] file: %s\n", entry->file);
         //sha512print(entry->hash, 1);
         if (!list_empty(entry->read_reqs))
             printk(KERN_EMERG "[HETFS] READ req:\n");
         list_for_each_entry_safe(posh, nh, entry->read_reqs, list) {
-            ++all_requests;
-            printk(KERN_EMERG "[HETFS] start: %lld - end:%lld\n",
-                                        posh->start_offset, posh->end_offset);
+            all_requests += posh->times;
+            printk(KERN_EMERG "[HETFS] start: %lld - end:%lld times:%d\n",
+                            posh->start_offset, posh->end_offset, posh->times);
         }
         if (!list_empty(entry->write_reqs))
             printk(KERN_EMERG "[HETFS] WRITE req:\n");
         list_for_each_entry_safe(posh, nh, entry->write_reqs, list) {
-            ++all_requests;
-            printk(KERN_EMERG "[HETFS] start: %lld - end:%lld\n",
-                                        posh->start_offset, posh->end_offset);
+            all_requests += posh->times;
+            printk(KERN_EMERG "[HETFS] start: %lld - end:%lld times:%d\n",
+                            posh->start_offset, posh->end_offset, posh->times);
         }
     }
     printk(KERN_EMERG "[HETFS]Tree Nodes:%d, requests:%d\n", all_nodes, all_requests);
