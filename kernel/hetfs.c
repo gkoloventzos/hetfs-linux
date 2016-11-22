@@ -1,6 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/hetfs.h>
+#include <linux/het.h>
 #include <linux/init_task.h>
 
 int print_tree(void) {
@@ -12,8 +13,8 @@ int print_tree(void) {
     all_nodes = all_requests = requests = 0;
 
     if (RB_EMPTY_ROOT(init_task.hetfstree)) {
-        exact = -4;
-        printk(KERN_EMERG "[ERROR] exact empty root\n");
+        __exact = -4;
+        printk(KERN_EMERG "[ERROR] __exact empty root\n");
         return 1;
     }
     for (node = rb_first(init_task.hetfstree); node; node = rb_next(node)) {
