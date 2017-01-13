@@ -2,6 +2,7 @@
 #include <linux/syscalls.h>
 #include <linux/hetfs.h>
 #include <linux/het.h>
+#include <linux/inhet.h>
 #include <linux/init_task.h>
 
 int print_tree(void) {
@@ -131,19 +132,20 @@ void analyze(struct data* InsNode)
 SYSCALL_DEFINE0(hetfs)
 {
 
-    printk(KERN_EMERG "[HETFS]Start of hetfs\n");
+/*    printk(KERN_EMERG "[HETFS]Start of hetfs\n");
     printk(KERN_EMERG "[HETFS] Start of hetfs\n");
     down_read(&tree_sem);
     print_tree();
     up_read(&tree_sem);
-    printk(KERN_EMERG "[HETFS] End of hetfs\n");
+    printk(KERN_EMERG "[HETFS] End of hetfs\n");*/
+    _myprint = (_myprint)?0:1;
 
     return 0;
 }
 
 SYSCALL_DEFINE0(analyze){
 
-    struct rb_node *node;
+/*    struct rb_node *node;
     struct data *entry;
     printk(KERN_EMERG "[HETFS]Start of analyze\n");
     down_read(&tree_sem);
@@ -152,7 +154,8 @@ SYSCALL_DEFINE0(analyze){
         analyze(entry);
     }
     up_read(&tree_sem);
-    printk(KERN_EMERG "[HETFS] End of analyze\n");
+    printk(KERN_EMERG "[HETFS] End of analyze\n");*/
+    printk(KERN_EMERG "_myprint is %s\n", _myprint ? "true" : "false");
 
     return 0;
 }
