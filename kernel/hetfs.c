@@ -100,8 +100,13 @@ void analyze(struct data* InsNode)
             }
         }
         mid = InsNode->read_all_file >> 1;
-        if (all > 0 && (((all & 1) && all > mid) || (!(all & 1) && all >= mid)))
+        if (all > 0 && (((all & 1) && all > mid) || (!(all & 1) && all >= mid))) {
+            InsNode->to_rot=1;
             printk(KERN_EMERG "[HETFS] It was read sequentially\n");
+        }
+        else {
+            InsNode->to_rot=0;
+        }
     }
     if (!list_empty(InsNode->write_reqs)) {
         InsNode->write_reqs = zip_list(InsNode->write_reqs);

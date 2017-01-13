@@ -22,6 +22,7 @@ struct data {
     int write_all_file;
     int read_seq;
     int write_seq;
+    int to_rot;
     unsigned long long int deleted;
     struct list_head *read_reqs;
     struct list_head *write_reqs;
