@@ -4,6 +4,12 @@
 #include <linux/rbtree.h>
 #include <linux/list.h>
 #include <linux/types.h>
+#include <linux/rwsem.h>
+
+#define MAX_DIFF 200000000
+#define MAX_NAME 255
+
+static DECLARE_RWSEM(tree_sem);
 
 struct analyze_request {
     long long start_offset;
