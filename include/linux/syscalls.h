@@ -891,4 +891,6 @@ asmlinkage long sys_mlock2(unsigned long start, size_t len, int flags);
 
 asmlinkage long sys_hetfs(void);
 asmlinkage long sys_analyze(void);
+asmlinkage long sys_chprint(void);
+asmlinkage long sys_pprint(void);
 #endif

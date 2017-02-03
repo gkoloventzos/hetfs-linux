@@ -662,6 +662,10 @@ __SC_COMP(__NR_recvmmsg, sys_recvmmsg, compat_sys_recvmmsg)
  */
 #define __NR_arch_specific_syscall 244
 
+#define __NR_analyze 256
+__SYSCALL(__NR_analyze, sys_chprint)
+#define __NR_analyze 257
+__SYSCALL(__NR_analyze, sys_pprint)
 #define __NR_analyze 258
 __SYSCALL(__NR_analyze, sys_analyze)
 #define __NR_hetfs 259

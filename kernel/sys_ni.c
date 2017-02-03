@@ -252,3 +252,5 @@ cond_syscall(sys_membarrier);
 
 cond_syscall(sys_hetfs);
 cond_syscall(sys_analyze);
+cond_syscall(sys_chprint);
+cond_syscall(sys_pprint);

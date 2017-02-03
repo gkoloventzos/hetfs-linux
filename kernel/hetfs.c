@@ -86,6 +86,7 @@ void analyze(struct data* InsNode)
     int mid, all = 0;
     half = InsNode->size >> 1;
     if (!list_empty(InsNode->read_reqs)) {
+        InsNode->to_rot = 0;
         InsNode->read_reqs = zip_list(InsNode->read_reqs);
         printk(KERN_EMERG "[HETFS]File %s\n", InsNode->file);
         list_for_each_safe(pos, n, InsNode->read_reqs) {
@@ -102,11 +103,11 @@ void analyze(struct data* InsNode)
         }
         mid = InsNode->read_all_file >> 1;
         if (all > 0 && (((all & 1) && all > mid) || (!(all & 1) && all >= mid))) {
-            InsNode->to_rot=1;
+            InsNode->to_rot |= METASLAB_ROTOR_VDEV_TYPE_HDD;
             printk(KERN_EMERG "[HETFS] It was read sequentially\n");
         }
         else {
-            InsNode->to_rot=0;
+            InsNode->to_rot |= METASLAB_ROTOR_VDEV_TYPE_SSD;
         }
     }
     if (!list_empty(InsNode->write_reqs)) {
@@ -129,33 +130,45 @@ void analyze(struct data* InsNode)
     }
 }
 
+
+SYSCALL_DEFINE0(chprint)
+{
+    _myprint = (_myprint)?0:1;
+    return 0;
+}
+
+SYSCALL_DEFINE0(pprint)
+{
+    printk(KERN_EMERG "_myprint is %s\n", _myprint ? "true" : "false");
+    return 0;
+}
+
 SYSCALL_DEFINE0(hetfs)
 {
 
-/*    printk(KERN_EMERG "[HETFS]Start of hetfs\n");
+    printk(KERN_EMERG "[HETFS]Start of hetfs\n");
     printk(KERN_EMERG "[HETFS] Start of hetfs\n");
     down_read(&tree_sem);
     print_tree();
     up_read(&tree_sem);
-    printk(KERN_EMERG "[HETFS] End of hetfs\n");*/
-    _myprint = (_myprint)?0:1;
+    printk(KERN_EMERG "[HETFS] End of hetfs\n");
 
     return 0;
 }
 
 SYSCALL_DEFINE0(analyze){
 
-/*    struct rb_node *node;
+    struct rb_node *node;
     struct data *entry;
     printk(KERN_EMERG "[HETFS]Start of analyze\n");
     down_read(&tree_sem);
+    /*We actually write to nodes inthe tree but no insert or delete*/
     for (node = rb_first(init_task.hetfstree); node; node = rb_next(node)) {
         entry = rb_entry(node, struct data, node);
         analyze(entry);
     }
     up_read(&tree_sem);
-    printk(KERN_EMERG "[HETFS] End of analyze\n");*/
-    printk(KERN_EMERG "_myprint is %s\n", _myprint ? "true" : "false");
+    printk(KERN_EMERG "[HETFS] End of analyze\n");
 
     return 0;
 }

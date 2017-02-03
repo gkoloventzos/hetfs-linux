@@ -334,6 +334,8 @@
 325	common	mlock2			sys_mlock2
 326	64	hetfs			sys_hetfs
 327	64	analyze			sys_analyze
+328	64	chprint			sys_chprint
+329	64	pprint			sys_pprint
 
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
