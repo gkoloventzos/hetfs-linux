@@ -48,6 +48,8 @@ struct data {
     unsigned long long int deleted;
     struct list_head *read_reqs;
     struct list_head *write_reqs;
+    struct rw_semaphore read_sem;
+    struct rw_semaphore write_sem;
     struct dentry *dentry;
     struct rb_node node;
 };
