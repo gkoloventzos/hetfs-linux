@@ -5,7 +5,7 @@
 #include <linux/inhet.h>
 #include <linux/init_task.h>
 
-int print_tree(void) {
+int print_tree(int flag) {
     struct rb_node *node;
     struct data *entry;
     struct analyze_request *posh, *nh;
@@ -23,22 +23,28 @@ int print_tree(void) {
         entry = rb_entry(node, struct data, node);
         printk(KERN_EMERG "[HETFS] file: %s\n", entry->file);
         //sha512print(entry->hash, 1);
-        if (!list_empty(entry->read_reqs))
-            printk(KERN_EMERG "[HETFS] READ req:\n");
-        list_for_each_entry_safe(posh, nh, entry->read_reqs, list) {
-            all_requests += posh->times;
-            printk(KERN_EMERG "[HETFS] start: %lld - end:%lld times:%d\n",
+        if (flag) {
+            if (!list_empty(entry->read_reqs) && flag)
+                printk(KERN_EMERG "[HETFS] READ req:\n");
+            list_for_each_entry_safe(posh, nh, entry->read_reqs, list) {
+                all_requests += posh->times;
+                printk(KERN_EMERG "[HETFS] start: %lld - end:%lld times:%d\n",
                             posh->start_offset, posh->end_offset, posh->times);
-        }
-        if (!list_empty(entry->write_reqs))
-            printk(KERN_EMERG "[HETFS] WRITE req:\n");
-        list_for_each_entry_safe(posh, nh, entry->write_reqs, list) {
-            all_requests += posh->times;
-            printk(KERN_EMERG "[HETFS] start: %lld - end:%lld times:%d\n",
+            }
+            if (!list_empty(entry->write_reqs))
+                printk(KERN_EMERG "[HETFS] WRITE req:\n");
+            list_for_each_entry_safe(posh, nh, entry->write_reqs, list) {
+                all_requests += posh->times;
+                printk(KERN_EMERG "[HETFS] start: %lld - end:%lld times:%d\n",
                             posh->start_offset, posh->end_offset, posh->times);
+            }
         }
     }
-    printk(KERN_EMERG "[HETFS]Tree Nodes:%d, requests:%d\n", all_nodes, all_requests);
+    if (flag)
+        printk(KERN_EMERG "[HETFS]Tree Nodes:%d, requests:%d\n", all_nodes, all_requests);
+    else
+        printk(KERN_EMERG "[HETFS]Tree Nodes:%d\n", all_nodes);
+
     return 0;
 }
 EXPORT_SYMBOL(print_tree);
@@ -143,13 +149,13 @@ SYSCALL_DEFINE0(pprint)
     return 0;
 }
 
-SYSCALL_DEFINE0(hetfs)
+SYSCALL_DEFINE1(hetfs, int, flag)
 {
 
     printk(KERN_EMERG "[HETFS]Start of hetfs\n");
     printk(KERN_EMERG "[HETFS] Start of hetfs\n");
     down_read(&tree_sem);
-    print_tree();
+    print_tree(flag);
     up_read(&tree_sem);
     printk(KERN_EMERG "[HETFS] End of hetfs\n");
 
