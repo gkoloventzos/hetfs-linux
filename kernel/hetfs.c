@@ -21,7 +21,8 @@ int print_tree(int flag) {
     for (node = rb_first(init_task.hetfstree); node; node = rb_next(node)) {
         ++all_nodes;
         entry = rb_entry(node, struct data, node);
-        printk(KERN_EMERG "[HETFS] file: %s\n", entry->file);
+        if (flag)
+            printk(KERN_EMERG "[HETFS] file: %s\n", file_dentry(entry->filp)->d_name.name);
         //sha512print(entry->hash, 1);
         if (flag) {
             if (!list_empty(entry->read_reqs) && flag)
@@ -149,13 +150,13 @@ SYSCALL_DEFINE0(pprint)
     return 0;
 }
 
-SYSCALL_DEFINE1(hetfs, int, flag)
+SYSCALL_DEFINE2(hetfs, int, flag, int, name)
 {
 
     printk(KERN_EMERG "[HETFS]Start of hetfs\n");
     printk(KERN_EMERG "[HETFS] Start of hetfs\n");
     down_read(&tree_sem);
-    print_tree(flag);
+    print_tree(flag, name);
     up_read(&tree_sem);
     printk(KERN_EMERG "[HETFS] End of hetfs\n");
 
