@@ -5,7 +5,7 @@
 #include <linux/inhet.h>
 #include <linux/init_task.h>
 
-int print_tree(int flag) {
+int print_tree(int flag, int name) {
     struct rb_node *node;
     struct data *entry;
     struct analyze_request *posh, *nh;
@@ -21,8 +21,8 @@ int print_tree(int flag) {
     for (node = rb_first(init_task.hetfstree); node; node = rb_next(node)) {
         ++all_nodes;
         entry = rb_entry(node, struct data, node);
-        if (flag)
-            printk(KERN_EMERG "[HETFS] file: %s\n", file_dentry(entry->filp)->d_name.name);
+        if (name)
+            printk(KERN_EMERG "[HETFS] file: %s\n", entry->dentry->d_name.name);
         //sha512print(entry->hash, 1);
         if (flag) {
             if (!list_empty(entry->read_reqs) && flag)
