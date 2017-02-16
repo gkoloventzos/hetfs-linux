@@ -1,4 +1,4 @@
-char *boot_files[] =
+char *boot_files[483] =
 { 
 "/bin/sed",
 "/lib/systemd/system/binfmt-support.service",
