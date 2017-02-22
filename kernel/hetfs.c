@@ -1,8 +1,6 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/hetfs.h>
-#include <linux/het.h>
-#include <linux/inhet.h>
 #include <linux/init_task.h>
 
 int print_tree(int flag, int name) {

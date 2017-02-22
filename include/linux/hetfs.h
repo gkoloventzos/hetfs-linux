@@ -27,6 +27,8 @@
 
 #define filp2name(filp) file_dentry(filp)->d_name.name
 
+int _myprint = 0;
+EXPORT_SYMBOL(_myprint);
 static DECLARE_RWSEM(tree_sem);
 
 struct analyze_request {
