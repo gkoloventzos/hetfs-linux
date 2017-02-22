@@ -25,6 +25,8 @@
 #define	METASLAB_ROTOR_VDEV_TYPE_HDD		0x08
 #define	METASLAB_ROTOR_VDEV_TYPE_HDD_RAIDZ	0x10
 
+#define filp2name(filp) file_dentry(filp)->d_name.name
+
 static DECLARE_RWSEM(tree_sem);
 
 struct analyze_request {
